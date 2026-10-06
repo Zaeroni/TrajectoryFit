@@ -46,7 +46,10 @@ public class NutritionController {
         List<NutritionLogEntity> rows = buildRows(req);
 
         // A day is logged in one tier; replace any prior entries for that day.
+        // Flush so the DELETE hits the DB before the INSERTs; otherwise Hibernate orders inserts
+        // first and re-logging an overlapping meal violates the (user, day, meal) unique key.
         nutrition.deleteByUserIdAndLoggedOn(req.userId(), req.loggedOn());
+        nutrition.flush();
         List<NutritionLogEntity> saved = nutrition.saveAll(rows);
         return toDayResponse(req.loggedOn(), saved);
     }
