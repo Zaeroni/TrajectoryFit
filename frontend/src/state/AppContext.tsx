@@ -10,7 +10,8 @@ interface AppState {
   loadingUsers: boolean
   usersError: string | null
   setCurrentUserId: (id: string) => void
-  reloadUsers: () => Promise<void>
+  /** Re-fetch users. `silent` skips the full-screen spinner (used after edits). */
+  reloadUsers: (silent?: boolean) => Promise<void>
   selectedDate: string
   setSelectedDate: (iso: string) => void
   /** Increments whenever logged data changes, so screens can re-fetch. */
@@ -32,8 +33,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [toastMessage, setToastMessage] = useState<string | null>(null)
   const toastTimer = useRef<number | undefined>(undefined)
 
-  const reloadUsers = useCallback(async () => {
-    setLoadingUsers(true)
+  const reloadUsers = useCallback(async (silent = false) => {
+    if (!silent) setLoadingUsers(true)
     setUsersError(null)
     try {
       const list = await api.listUsers()

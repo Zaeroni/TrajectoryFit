@@ -39,6 +39,11 @@ export const api = {
     medication?: string; loggingPreference?: Tier; bodyCompAccess?: string[]
   }) => request<User>('/api/users', { method: 'POST', body: JSON.stringify(body) }),
 
+  updateUser: (id: string, body: {
+    name?: string; heightIn?: number; goalWeightLb?: number;
+    medication?: string; loggingPreference?: Tier; bodyCompAccess?: string[]
+  }) => request<User>(`/api/users/${id}`, { method: 'PATCH', body: JSON.stringify(body) }),
+
   getRisk: (id: string, date?: string) =>
     request<RiskResponse>(`/api/users/${id}/risk${date ? `?date=${date}` : ''}`),
   getTrends: (id: string, range: number, date?: string) =>

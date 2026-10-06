@@ -20,6 +20,7 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -214,6 +215,33 @@ class ApiIntegrationTest {
         mvc.perform(get("/api/users/" + user + "/weigh-ins"))
                 .andExpect(jsonPath("$.length()").value(1))
                 .andExpect(jsonPath("$[0].weightLb").value(198.2));
+    }
+
+    @Test
+    void patchUpdatesOnlyTheProvidedFields() throws Exception {
+        String user = createUser();
+        mvc.perform(patch("/api/users/" + user).contentType(MediaType.APPLICATION_JSON).content("""
+                {"goalWeightLb":150,"loggingPreference":"precise","bodyCompAccess":["gym_scan","smart_scale"]}"""))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.goalWeightLb").value(150.0))
+                .andExpect(jsonPath("$.loggingPreference").value("precise"))
+                .andExpect(jsonPath("$.bodyCompAccess.length()").value(2))
+                .andExpect(jsonPath("$.name").value("Test User"))
+                .andExpect(jsonPath("$.heightIn").value(70.0))
+                .andExpect(jsonPath("$.medication").value("semaglutide"));
+    }
+
+    @Test
+    void patchRejectsBadValuesAndUnknownUsers() throws Exception {
+        String user = createUser();
+        for (String bad : new String[] {
+                "{\"medication\":\"aspirin\"}", "{\"goalWeightLb\":5}",
+                "{\"bodyCompAccess\":[\"mri\"]}", "{\"name\":\"  \"}"}) {
+            mvc.perform(patch("/api/users/" + user).contentType(MediaType.APPLICATION_JSON).content(bad))
+                    .andExpect(status().isBadRequest());
+        }
+        mvc.perform(patch("/api/users/" + UUID.randomUUID()).contentType(MediaType.APPLICATION_JSON).content("{}"))
+                .andExpect(status().isNotFound());
     }
 
     // ------------------------------------------------------------------ tiered nutrition

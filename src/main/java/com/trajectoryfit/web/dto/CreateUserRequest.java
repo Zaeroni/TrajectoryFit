@@ -19,6 +19,7 @@ public record CreateUserRequest(
                 message = "must be one of: semaglutide, tirzepatide, other, none") String medication,
         @Pattern(regexp = "quick|estimate|precise",
                 message = "must be one of: quick, estimate, precise") String loggingPreference,
-        List<String> bodyCompAccess
+        List<@Pattern(regexp = "gym_scan|smart_scale|paid_scan",
+                message = "must be one of: gym_scan, smart_scale, paid_scan") String> bodyCompAccess
 ) {
 }

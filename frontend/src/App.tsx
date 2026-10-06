@@ -1,9 +1,12 @@
 import { useState } from 'react'
-import { HomeIcon, LogIcon, TrendsIcon, TrainIcon } from './components/Icons'
+import { HomeIcon, LogIcon, PersonIcon, TrendsIcon, TrainIcon } from './components/Icons'
 import { Dashboard } from './screens/Dashboard'
 import { FactorDetail } from './screens/FactorDetail'
 import { HowItWorks } from './screens/HowItWorks'
 import { Log } from './screens/Log'
+import { Onboarding } from './screens/Onboarding'
+import { Settings } from './screens/Settings'
+import { Terms } from './screens/Terms'
 import { Train } from './screens/Train'
 import { Trends } from './screens/Trends'
 import { useApp } from './state/AppContext'
@@ -22,10 +25,14 @@ export default function App() {
   const [prevScreen, setPrevScreen] = useState<Screen>('home')
   const [factorKey, setFactorKey] = useState<FactorKey>('protein')
 
+  // With no users at all there is nothing to show but setup.
+  const noUsers = !loadingUsers && !usersError && users.length === 0
+  const activeScreen: Screen = noUsers ? 'onboarding' : screen
+
   const nav: Nav = {
     go: (s) => { setPrevScreen(screen); setScreen(s) },
     openFactor: (k) => { setPrevScreen(screen); setFactorKey(k); setScreen('factor') },
-    back: () => setScreen(prevScreen === 'factor' ? 'home' : prevScreen),
+    back: () => setScreen(prevScreen === 'factor' || prevScreen === screen ? 'home' : prevScreen),
   }
 
   return (
@@ -33,6 +40,9 @@ export default function App() {
       <header className="frame-header">
         <span className="brand">TrajectoryFit</span>
         <div className="user-switch">
+          <button className="icon-btn" onClick={() => nav.go('settings')} aria-label="Settings">
+            <PersonIcon style={{ width: 16, height: 16 }} />
+          </button>
           <select
             className="user-select"
             value={currentUser?.id ?? ''}
@@ -53,17 +63,20 @@ export default function App() {
         {usersError && <div className="center-note">Couldn’t reach the API: {usersError}</div>}
         {!loadingUsers && !usersError && (
           <>
-            {screen === 'home' && <Dashboard nav={nav} />}
-            {screen === 'factor' && <FactorDetail factorKey={factorKey} nav={nav} />}
-            {screen === 'log' && <Log />}
-            {screen === 'trends' && <Trends />}
-            {screen === 'train' && <Train nav={nav} />}
-            {screen === 'howitworks' && <HowItWorks nav={nav} />}
+            {activeScreen === 'home' && <Dashboard nav={nav} />}
+            {activeScreen === 'factor' && <FactorDetail factorKey={factorKey} nav={nav} />}
+            {activeScreen === 'log' && <Log />}
+            {activeScreen === 'trends' && <Trends />}
+            {activeScreen === 'train' && <Train nav={nav} />}
+            {activeScreen === 'howitworks' && <HowItWorks nav={nav} />}
+            {activeScreen === 'settings' && <Settings nav={nav} />}
+            {activeScreen === 'terms' && <Terms nav={nav} />}
+            {activeScreen === 'onboarding' && <Onboarding nav={nav} canCancel={!noUsers} />}
           </>
         )}
       </main>
 
-      <nav className="bottom-nav">
+      {activeScreen !== 'onboarding' && <nav className="bottom-nav">
         {NAV_ITEMS.map(({ screen: s, label, Icon }) => {
           const active = screen === s || (s === 'home' && (screen === 'factor' || screen === 'howitworks'))
           return (
@@ -73,7 +86,7 @@ export default function App() {
             </button>
           )
         })}
-      </nav>
+      </nav>}
 
       <div className={`toast${toastMessage ? ' show' : ''}`}>{toastMessage}</div>
     </div>

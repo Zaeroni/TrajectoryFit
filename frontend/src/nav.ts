@@ -1,4 +1,4 @@
-export type Screen = 'home' | 'log' | 'trends' | 'train' | 'howitworks' | 'factor'
+export type Screen = 'home' | 'log' | 'trends' | 'train' | 'howitworks' | 'factor' | 'settings' | 'terms' | 'onboarding'
 export type FactorKey = 'weight' | 'protein' | 'training'
 
 export interface Nav {
