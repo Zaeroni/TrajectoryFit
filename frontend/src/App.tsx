@@ -36,7 +36,7 @@ export default function App() {
   }
 
   return (
-    <div className="app">
+    <div className={`app${activeScreen === 'onboarding' ? ' app-bare' : ''}`}>
       <header className="frame-header">
         <span className="brand">TrajectoryFit</span>
         <div className="user-switch">
@@ -77,6 +77,7 @@ export default function App() {
       </main>
 
       {activeScreen !== 'onboarding' && <nav className="bottom-nav">
+        <span className="sidebar-brand">TrajectoryFit</span>
         {NAV_ITEMS.map(({ screen: s, label, Icon }) => {
           const active = screen === s || (s === 'home' && (screen === 'factor' || screen === 'howitworks'))
           return (

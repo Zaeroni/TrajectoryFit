@@ -79,6 +79,7 @@ function SettingsForm({ nav }: { nav: Nav }) {
         <span style={{ fontSize: 16, fontWeight: 600 }}>Settings</span>
       </button>
 
+      <div className="masonry">
       <div className="card">
         <span className="label">Profile and goals</span>
         <label className="label" htmlFor="set-name">Name</label>
@@ -126,6 +127,7 @@ function SettingsForm({ nav }: { nav: Nav }) {
         <LinkRow label="How this works" onClick={() => nav.go('howitworks')} />
         <LinkRow label="Terms of service" onClick={() => nav.go('terms')} />
         <LinkRow label="Add a new profile" onClick={() => nav.go('onboarding')} last />
+      </div>
       </div>
 
       {error && <p role="alert" style={{ fontSize: 13, color: 'var(--red)', margin: '4px 2px' }}>{error}</p>}

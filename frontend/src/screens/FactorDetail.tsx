@@ -65,8 +65,8 @@ export function FactorDetail({ factorKey, nav }: { factorKey: FactorKey; nav: Na
   const color = badgeClass === 'badge-green' ? 'var(--green)' : badgeClass === 'badge-yellow' ? 'var(--yellow)' : badgeClass === 'badge-red' ? 'var(--red)' : 'var(--ink3)'
 
   return (
-    <div>
-      <button className="back-row" onClick={nav.back}>
+    <div className="screen-grid">
+      <button className="back-row span-2" onClick={nav.back}>
         <ChevronLeft className="icon" style={{ width: 20, height: 20 }} />
         <span style={{ fontSize: 16, fontWeight: 600 }}>{factor?.label ?? 'Factor'}</span>
       </button>
@@ -93,7 +93,7 @@ export function FactorDetail({ factorKey, nav }: { factorKey: FactorKey; nav: Na
         <span className="label">What would help</span>
         <p style={{ fontSize: 13, lineHeight: 1.6, margin: 0, color: 'var(--ink2)' }}>{copy.help}</p>
       </div>
-      <div className="card" style={{ background: 'var(--page)', boxShadow: 'none' }}>
+      <div className="card span-2" style={{ background: 'var(--page)', boxShadow: 'none' }}>
         <p style={{ fontSize: 12, lineHeight: 1.55, margin: 0, color: 'var(--ink2)' }}>{copy.caveat}</p>
       </div>
     </div>

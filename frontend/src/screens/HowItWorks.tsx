@@ -3,7 +3,7 @@ import type { Nav } from '../nav'
 
 export function HowItWorks({ nav }: { nav: Nav }) {
   return (
-    <div>
+    <div className="narrow">
       <button className="back-row" onClick={nav.back}>
         <ChevronLeft className="icon" style={{ width: 20, height: 20 }} />
         <span style={{ fontSize: 16, fontWeight: 600 }}>How this works</span>

@@ -78,7 +78,7 @@ export function Train({ nav }: { nav: Nav }) {
   }
 
   return (
-    <div>
+    <div className="narrow">
       <h1 className="screen-title">Log training</h1>
       <DayStrip dates={trainDays()} selected={selectedDate} onSelect={setSelectedDate} datesWithData={datesWithData} />
 

@@ -72,7 +72,7 @@ export function Onboarding({ nav, canCancel }: { nav: Nav; canCancel: boolean })
   }
 
   return (
-    <div>
+    <div className="narrow narrow-sm">
       <div className="progress-track">
         {Array.from({ length: TOTAL }, (_, i) => <div key={i} className={`progress-seg${i < step ? ' done' : ''}`} />)}
       </div>

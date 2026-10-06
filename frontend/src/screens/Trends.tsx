@@ -4,6 +4,7 @@ import { WeightChart, LevelBars } from '../components/Charts'
 import { CheckCircle } from '../components/Icons'
 import { levelHex } from '../lib/colors'
 import { weekdayShort } from '../lib/dates'
+import { useIsDesktop } from '../lib/useMediaQuery'
 import { useAsync } from '../lib/useAsync'
 import { useApp } from '../state/AppContext'
 
@@ -17,12 +18,13 @@ export function Trends() {
 
   if (!currentUser) return <div className="center-note">Pick a user to begin.</div>
 
+  const isDesktop = useIsDesktop()
   const data = trends.data
   const last7 = data ? data.points.slice(-7) : []
 
   return (
-    <div>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', margin: '8px 2px 16px' }}>
+    <div className="screen-grid">
+      <div className="span-2" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', margin: '8px 2px 16px' }}>
         <h1 className="screen-title" style={{ margin: 0 }}>Trends</h1>
         <div className="toggle-pill">
           {RANGES.map((r) => (
@@ -31,16 +33,16 @@ export function Trends() {
         </div>
       </div>
 
-      <div className="card">
+      <div className="card span-2">
         <span className="label">Weight</span>
-        {data ? <WeightChart points={data.points} showAxes showSmoothed height={150} /> : <div className="spinner" />}
+        {data ? <WeightChart points={data.points} showAxes showSmoothed height={isDesktop ? 280 : 150} /> : <div className="spinner" />}
         <div style={{ display: 'flex', gap: 14, marginTop: 6 }}>
           <Legend color="#0A84FF" label="Actual" />
           <Legend color="#AEAEB2" label="Smoothed" />
         </div>
       </div>
 
-      <div className="row2" style={{ marginBottom: 12 }}>
+      <div className="row2 contents-desktop" style={{ marginBottom: 12 }}>
         <div className="card" style={{ marginBottom: 0 }}>
           <span className="label">Avg protein adherence</span>
           <span style={{ fontSize: 22, fontWeight: 600 }}>

@@ -142,7 +142,7 @@ export function Log() {
   }
 
   return (
-    <div>
+    <div className="narrow">
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', margin: '8px 2px 8px' }}>
         <h1 className="screen-title" style={{ margin: 0 }}>Log</h1>
         <div className="toggle-pill">

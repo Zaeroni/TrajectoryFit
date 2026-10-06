@@ -4,6 +4,7 @@ import { CheckCircle, ChevronRight, DumbbellIcon, ProteinIcon, ScaleIcon } from 
 import { WeightChart } from '../components/Charts'
 import { bandColorVar, statusBadgeClass } from '../lib/colors'
 import { useAsync } from '../lib/useAsync'
+import { useIsDesktop } from '../lib/useMediaQuery'
 import { useApp } from '../state/AppContext'
 import type { FactorKey, Nav } from '../nav'
 
@@ -29,6 +30,7 @@ export function Dashboard({ nav }: { nav: Nav }) {
   const { currentUser, dataVersion } = useApp()
   const userId = currentUser?.id
 
+  const isDesktop = useIsDesktop()
   const risk = useAsync(() => api.getRisk(userId!), [userId, dataVersion])
   const trends = useAsync(() => api.getTrends(userId!, 7), [userId, dataVersion])
 
@@ -43,13 +45,15 @@ export function Dashboard({ nav }: { nav: Nav }) {
   const clickable: FactorKey[] = ['weight', 'protein', 'training']
 
   return (
-    <div>
+    <div className="screen-grid">
       {r.sustainedRisk && (
-        <div className="banner banner-red"><p>{r.sustainedRiskNote}</p></div>
+        <div className="banner banner-red span-2"><p>{r.sustainedRiskNote}</p></div>
       )}
 
-      <p style={{ fontSize: 13, color: 'var(--ink2)', margin: '8px 2px 2px' }}>{greeting()}, {firstName}</p>
-      <p style={{ fontSize: 12, color: 'var(--ink3)', margin: '0 2px 2px' }}>{MED_LABEL[currentUser.medication] ?? ''}</p>
+      <div className="span-2">
+        <p style={{ fontSize: 13, color: 'var(--ink2)', margin: '8px 2px 2px' }}>{greeting()}, {firstName}</p>
+        <p style={{ fontSize: 12, color: 'var(--ink3)', margin: '0 2px 2px' }}>{MED_LABEL[currentUser.medication] ?? ''}</p>
+      </div>
 
       {/* Risk card */}
       <div className="card">
@@ -96,20 +100,20 @@ export function Dashboard({ nav }: { nav: Nav }) {
       </div>
 
       {/* Weight trajectory */}
-      <div className="card">
+      <div className="card span-2">
         <span className="label">Weight trajectory, this week</span>
         {trends.data
-          ? <WeightChart points={trends.data.points} height={100} />
+          ? <WeightChart points={trends.data.points} height={isDesktop ? 200 : 100} />
           : <div className="muted" style={{ padding: '20px 0', textAlign: 'center' }}>…</div>}
       </div>
 
-      <div className="row3">
+      <div className="row3 span-2">
         <button className="btn" onClick={() => nav.go('log')}>Weight</button>
         <button className="btn" onClick={() => nav.go('log')}>Protein</button>
         <button className="btn" onClick={() => nav.go('train')}>Trained</button>
       </div>
 
-      <button className="btn-link" onClick={() => nav.go('howitworks')}>How this works</button>
+      <button className="btn-link span-2" onClick={() => nav.go('howitworks')}>How this works</button>
     </div>
   )
 }

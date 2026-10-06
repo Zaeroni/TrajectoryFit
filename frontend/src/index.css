@@ -150,3 +150,70 @@ svg.ico { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-wi
   border-radius: 12px; background: var(--surface); cursor: pointer; font-size: 13px; line-height: 1.5;
 }
 .onb-ack input { margin: 2px 0 0; width: 16px; height: 16px; flex-shrink: 0; }
+
+/* ---------------------------------------------------------------------------
+   Layout helpers. On phones these are no-ops; the desktop block below activates them.
+   --------------------------------------------------------------------------- */
+.sidebar-brand { display: none; }
+
+/* ---------------------------------------------------------------------------
+   Desktop (>= 900px): sidebar nav + wide content area. Keep in sync with useMediaQuery.ts.
+   --------------------------------------------------------------------------- */
+@media (min-width: 900px) {
+  .app {
+    max-width: none; margin: 0; display: grid;
+    grid-template-columns: 240px minmax(0, 1fr); grid-template-rows: auto 1fr;
+  }
+  .app.app-bare { grid-template-columns: minmax(0, 1fr); }
+
+  /* Bottom bar becomes a full-height left sidebar */
+  .bottom-nav {
+    grid-column: 1; grid-row: 1 / span 2;
+    position: sticky; top: 0; left: auto; bottom: auto; transform: none;
+    width: auto; max-width: none; height: 100vh; align-self: start;
+    flex-direction: column; justify-content: flex-start; gap: 4px;
+    padding: 28px 16px; background: var(--surface); backdrop-filter: none;
+    border-top: none; border-right: 0.5px solid var(--line);
+  }
+  .sidebar-brand { display: block; font-size: 20px; font-weight: 600; letter-spacing: -0.01em; padding: 0 12px 24px; }
+  .nav-item {
+    flex: none; flex-direction: row; justify-content: flex-start; gap: 12px;
+    padding: 11px 12px; border-radius: 10px; font-size: 14px;
+  }
+  .nav-item:hover { background: var(--page); }
+  .nav-item.active { background: var(--blue-tint); }
+  .nav-item .ico { width: 20px; height: 20px; }
+
+  .frame-header { grid-column: 2; padding: 20px 40px 0; justify-content: flex-end; }
+  .frame-header .brand { display: none; }
+  .content { grid-column: 2; padding: 8px 40px 56px; width: 100%; max-width: 1080px; justify-self: center; }
+  .app.app-bare .frame-header { grid-column: 1; }
+  .app.app-bare .content { grid-column: 1; }
+
+  /* Two-column card grids for the data-heavy screens */
+  .screen-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; align-items: start; }
+  .screen-grid > .card { margin-bottom: 0; }
+  .screen-grid > .span-2 { grid-column: 1 / -1; }
+  .screen-grid > .banner { margin: 0; }
+  .screen-grid > .btn-link { padding-top: 0; }
+  .contents-desktop { display: contents; }
+  .contents-desktop > .card { margin-bottom: 0; }
+
+  /* Forms read better as a centered, narrower column */
+  .narrow { max-width: 640px; margin: 0 auto; }
+  .narrow.narrow-sm { max-width: 520px; padding-top: 24px; }
+
+  .toast { bottom: 32px; }
+  .card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+}
+
+/* Wide screens: give the content a little more room */
+@media (min-width: 1400px) {
+  .content { max-width: 1200px; }
+}
+
+@media (min-width: 900px) {
+  /* Masonry-style two-column flow for cards of uneven height (Settings) */
+  .masonry { column-count: 2; column-gap: 16px; }
+  .masonry > .card { break-inside: avoid; margin-bottom: 16px; }
+}
