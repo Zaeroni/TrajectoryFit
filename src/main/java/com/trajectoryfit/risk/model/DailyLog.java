@@ -9,10 +9,10 @@ import java.time.LocalDate;
  * scoring rules operate in), and the scoring engine reads them without knowing where
  * they came from.
  *
- * <p>Every signal is independently nullable. A {@code null} means "not logged", which
+ * Every signal is independently nullable. A {@code null} means "not logged", which
  * the scoring rules treat as absent data (excluded), never as a bad value.
  *
- * <p>Weights are in pounds and lean mass in pounds to keep the port faithful to the
+ * Weights are in pounds and lean mass in pounds to keep the port faithful to the
  * validated JavaScript reference; the DB stores metric and converts at the boundary.
  */
 public final class DailyLog {

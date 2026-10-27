@@ -13,7 +13,7 @@ import java.util.List;
  * archetypes into their expected risk bands — the milestone the handoff calls the
  * "strongest, most concrete proof this project has that the scoring logic actually works".
  *
- * <p>Deliberately framework-free with a {@code main} method so it can be compiled and run
+ * Deliberately framework-free with a {@code main} method so it can be compiled and run
  * with plain {@code javac}/{@code java}, independent of Spring or the database. The same
  * checks are also exercised as JUnit tests once the full build is in place. Exits non-zero
  * if any archetype lands in the wrong band or a load-bearing invariant is violated.

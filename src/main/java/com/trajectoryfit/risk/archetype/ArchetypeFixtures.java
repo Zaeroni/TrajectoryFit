@@ -16,7 +16,7 @@ import java.util.List;
  * the JavaScript reference was validated against; running the Java engine over them and
  * confirming matching bands is the project's core proof that the port is faithful.
  *
- * <p>The anchor date is fixed so results are deterministic — only the values and their
+ * The anchor date is fixed so results are deterministic — only the values and their
  * order matter to scoring, not the calendar dates themselves.
  */
 public final class ArchetypeFixtures {

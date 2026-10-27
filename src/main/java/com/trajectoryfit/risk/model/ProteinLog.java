@@ -9,7 +9,7 @@ import java.util.List;
  * 7-day average bodyweight (for the Precise gram target) and is done by
  * {@link com.trajectoryfit.risk.ProteinNormalizer}.
  *
- * <p>Construct via the tier-specific factories. Meal slots follow the prototype's
+ * Construct via the tier-specific factories. Meal slots follow the prototype's
  * fixed order: breakfast, lunch, dinner, snacks. A {@code null} entry in a meal list
  * means that meal was not logged.
  */
