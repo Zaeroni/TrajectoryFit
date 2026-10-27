@@ -10,22 +10,22 @@ export function bandColorVar(band: Band | null): string {
   }
 }
 
-/** Resolved hex for a band (for chart fills, which can't read CSS vars). */
-export function bandHex(band: Band | null): string {
-  switch (band) {
-    case 'Low': return '#34C759'
-    case 'Moderate': return '#B8860B'
-    case 'High': return '#FF3B30'
-    default: return '#AEAEB2'
-  }
+/** Variable to use when the accent is drawn as text or a thin icon: true yellow is unreadable on white. */
+export function textVar(name: string): string {
+  return name === '--yellow' ? '--yellow-text' : name
 }
 
-export function levelHex(level: Level | null): string {
+/** CSS color (a var() reference) for a band, for backgrounds and fills. Follows the theme automatically. */
+export function bandColor(band: Band | null): string {
+  return `var(${bandColorVar(band)})`
+}
+
+export function levelColor(level: Level | null): string {
   switch (level) {
-    case 'low': return '#FF3B30'
-    case 'good': return '#34C759'
-    case 'high': return '#B8860B'
-    default: return '#E5E5EA'
+    case 'low': return 'var(--red)'
+    case 'good': return 'var(--green)'
+    case 'high': return 'var(--yellow)'
+    default: return 'var(--line)'
   }
 }
 

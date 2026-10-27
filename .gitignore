@@ -13,3 +13,10 @@ build/
 # Local artifacts
 *.log
 db/seed.sql
+.playwright-mcp/
+bin/
+.agents/
+.claude/
+skills-lock.json
+HANDOFF.md
+design-checklist.md
