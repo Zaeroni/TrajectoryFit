@@ -219,7 +219,7 @@ export function Log() {
           <label className="label">Protein by meal, exact grams</label>
           <p style={{ fontSize: 12, color: 'var(--ink3)', margin: '0 2px 10px' }}>Enter grams per meal; they add up as you go</p>
           {MEALS.map((m) => (
-            <div key={m} style={{ display: 'flex', alignItems: 'center', gap: 10, background: 'var(--page)', border: '1px solid var(--line)', borderRadius: 12, padding: '10px 12px', marginBottom: 8 }}>
+            <div key={m} style={{ display: 'flex', alignItems: 'center', gap: 10, background: 'var(--fill)', border: '1px solid var(--line)', borderRadius: 12, padding: '10px 12px', marginBottom: 8 }}>
               <span style={{ fontSize: 14, flex: 1 }}>{MEAL_LABEL[m]}</span>
               <input
                 type="number" placeholder="0" value={mealGrams[m] ?? ''}
@@ -229,7 +229,7 @@ export function Log() {
               <span style={{ fontSize: 13, color: 'var(--ink3)' }}>g</span>
             </div>
           ))}
-          <div className="card" style={{ background: 'var(--page)', boxShadow: 'none', marginTop: 8 }}>
+          <div className="card" style={{ background: 'var(--fill)', boxShadow: 'none', marginTop: 8 }}>
             <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between' }}>
               <span style={{ fontSize: 13, color: 'var(--ink2)' }}>Logged</span>
               <span style={{ fontSize: 20, fontWeight: 600 }}>{Math.round(preciseTotal)}g</span>

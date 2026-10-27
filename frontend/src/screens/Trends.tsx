@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { api } from '../api/client'
 import { WeightChart, LevelBars } from '../components/Charts'
 import { CheckCircle } from '../components/Icons'
-import { levelHex } from '../lib/colors'
+import { levelColor } from '../lib/colors'
 import { weekdayShort } from '../lib/dates'
 import { useIsDesktop } from '../lib/useMediaQuery'
 import { useAsync } from '../lib/useAsync'
@@ -15,12 +15,21 @@ export function Trends() {
   const userId = currentUser?.id
   const [range, setRange] = useState(7)
   const trends = useAsync(() => api.getTrends(userId!, range), [userId, range, dataVersion])
+  const weighIns = useAsync(() => api.getWeighIns(userId!), [userId, dataVersion])
 
   if (!currentUser) return <div className="center-note">Pick a user to begin.</div>
 
   const isDesktop = useIsDesktop()
   const data = trends.data
   const last7 = data ? data.points.slice(-7) : []
+
+  // On 30D/90D, start the weight axis at the first-ever weigh-in when history is shorter than the range,
+  // so the chart fills its width. Needs 2+ weigh-ins; with fewer there is no line to fill the space with.
+  const firstWeighIn = weighIns.data && weighIns.data.length >= 2 ? weighIns.data[0].loggedOn : null
+  const weightPoints = data && range > 7 && firstWeighIn && firstWeighIn > data.points[0].date
+    ? data.points.filter((p) => p.date >= firstWeighIn)
+    : data?.points
+  const chartReady = !!data && !trends.loading && !weighIns.loading
 
   return (
     <div className="screen-grid">
@@ -35,10 +44,10 @@ export function Trends() {
 
       <div className="card span-2">
         <span className="label">Weight</span>
-        {data ? <WeightChart points={data.points} showAxes showSmoothed height={isDesktop ? 280 : 150} /> : <div className="spinner" />}
+        {chartReady && weightPoints ? <WeightChart points={weightPoints} showAxes showSmoothed rangeDays={range} height={isDesktop ? 280 : 150} /> : <div className="spinner" />}
         <div style={{ display: 'flex', gap: 14, marginTop: 6 }}>
-          <Legend color="#0A84FF" label="Actual" />
-          <Legend color="#AEAEB2" label="Smoothed" />
+          <Legend color="var(--blue)" label="Actual" />
+          <Legend color="var(--ink3)" label="Smoothed" />
         </div>
       </div>
 
@@ -60,7 +69,7 @@ export function Trends() {
       <div className="card">
         <span className="label">Protein by day (last 7)</span>
         {data
-          ? <LevelBars segments={last7.map((p) => ({ color: levelHex(p.proteinLevel), label: weekdayShort(p.date) }))} />
+          ? <LevelBars segments={last7.map((p) => ({ color: levelColor(p.proteinLevel), label: weekdayShort(p.date) }))} />
           : <div className="muted">…</div>}
       </div>
 

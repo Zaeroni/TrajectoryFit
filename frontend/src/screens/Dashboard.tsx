@@ -2,7 +2,7 @@ import { api } from '../api/client'
 import type { FactorDto } from '../api/types'
 import { CheckCircle, ChevronRight, DumbbellIcon, ProteinIcon, ScaleIcon } from '../components/Icons'
 import { WeightChart } from '../components/Charts'
-import { bandColorVar, statusBadgeClass } from '../lib/colors'
+import { bandColorVar, statusBadgeClass, textVar } from '../lib/colors'
 import { useAsync } from '../lib/useAsync'
 import { useIsDesktop } from '../lib/useMediaQuery'
 import { useApp } from '../state/AppContext'
@@ -61,7 +61,7 @@ export function Dashboard({ nav }: { nav: Nav }) {
         {r.hasData ? (
           <>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: 10 }}>
-              <span className="risk-number" style={{ color }}>{r.band}</span>
+              <span className="risk-number" style={{ color: `var(${textVar(bandColorVar(r.band))})` }}>{r.band}</span>
               <span style={{ fontSize: 13, color: 'var(--ink3)' }}>score {r.score} / 100</span>
             </div>
             <div style={{ height: 7, borderRadius: 4, background: `var(${bandColorVar(r.band)}-tint)`, overflow: 'hidden', marginTop: 12 }}>
@@ -87,8 +87,8 @@ export function Dashboard({ nav }: { nav: Nav }) {
           const tint = badgeClass === 'badge-green' ? '--green' : badgeClass === 'badge-yellow' ? '--yellow' : badgeClass === 'badge-red' ? '--red' : '--ink3'
           return (
             <button key={key} className="factor-row" onClick={() => nav.openFactor(key)}>
-              <div className="icon-square" style={{ background: `var(${tint}-tint, var(--page))` }}>
-                <Icon className="icon" style={{ width: 16, height: 16, color: `var(${tint})` }} />
+              <div className="icon-square" style={{ background: `var(${tint}-tint, var(--fill))` }}>
+                <Icon className="icon" style={{ width: 16, height: 16, color: `var(${textVar(tint)})` }} />
               </div>
               <span style={{ fontSize: 14, flex: 1 }}>{f.label}</span>
               <span className={`badge ${badgeClass}`}>{f.status}</span>
@@ -103,7 +103,7 @@ export function Dashboard({ nav }: { nav: Nav }) {
       <div className="card span-2">
         <span className="label">Weight trajectory, this week</span>
         {trends.data
-          ? <WeightChart points={trends.data.points} height={isDesktop ? 200 : 100} />
+          ? <WeightChart points={trends.data.points} showHealthyRange showXAxis height={isDesktop ? 200 : 100} />
           : <div className="muted" style={{ padding: '20px 0', textAlign: 'center' }}>…</div>}
       </div>
 
@@ -126,11 +126,11 @@ function BodyCompRow({ factor }: { factor?: FactorDto }) {
     : status === 'Slight lean mass dip' ? '--yellow' : '--ink3'
   return (
     <div className="factor-row" style={{ cursor: 'default' }}>
-      <div className="icon-square" style={{ background: isReading ? `var(${tint}-tint)` : 'var(--page)' }}>
-        <ScaleIcon className="icon" style={{ width: 16, height: 16, color: `var(${tint})` }} />
+      <div className="icon-square" style={{ background: isReading ? `var(${tint}-tint)` : 'var(--fill)' }}>
+        <ScaleIcon className="icon" style={{ width: 16, height: 16, color: `var(${textVar(tint)})` }} />
       </div>
       <span style={{ fontSize: 14, flex: 1, color: 'var(--ink2)' }}>Body comp trend</span>
-      <span style={{ fontSize: 12, color: isReading ? `var(${tint})` : 'var(--ink3)' }}>{status}</span>
+      <span style={{ fontSize: 12, color: isReading ? `var(${textVar(tint)})` : 'var(--ink3)' }}>{status}</span>
     </div>
   )
 }

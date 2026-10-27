@@ -1,10 +1,10 @@
 // Minimal inline-SVG icon set, ported from the prototype. Each takes standard SVG props.
 import type { SVGProps } from 'react'
 
-const base = (props: SVGProps<SVGSVGElement>) => ({
-  className: 'ico',
+const base = ({ className, ...props }: SVGProps<SVGSVGElement>) => ({
   viewBox: '0 0 24 24',
   ...props,
+  className: className ? `ico ${className}` : 'ico',
 })
 
 export const HomeIcon = (p: SVGProps<SVGSVGElement>) => (

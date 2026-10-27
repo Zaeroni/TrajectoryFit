@@ -10,19 +10,14 @@ interface Props {
 
 /** Horizontal, scrollable day picker; keeps the selected day centered. */
 export function DayStrip({ dates, selected, onSelect, datesWithData }: Props) {
-  const wrapRef = useRef<HTMLDivElement>(null)
   const selectedRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
-    const wrap = wrapRef.current
-    const cell = selectedRef.current
-    if (wrap && cell) {
-      wrap.scrollLeft = cell.offsetLeft - wrap.clientWidth / 2 + cell.clientWidth / 2
-    }
+    selectedRef.current?.scrollIntoView({ inline: 'center', block: 'nearest' })
   }, [selected, dates])
 
   return (
-    <div className="date-strip" ref={wrapRef}>
+    <div className="date-strip">
       {dates.map((iso) => {
         const d = fromISO(iso)
         const isSel = iso === selected

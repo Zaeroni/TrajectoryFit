@@ -26,10 +26,10 @@ const COPY: Record<FactorKey, { why: string; help: string; caveat: string }> = {
   },
 }
 
-const NEUTRAL = '#E5E5EA'
-const GREEN = '#34C759'
-const YELLOW = '#B8860B'
-const RED = '#FF3B30'
+const NEUTRAL = 'var(--line)'
+const GREEN = 'var(--green)'
+const YELLOW = 'var(--yellow)'
+const RED = 'var(--red)'
 
 function buildSegments(key: FactorKey, points: TrendPoint[]): { color: string; label: string }[] {
   return points.map((p, i) => {
@@ -62,7 +62,7 @@ export function FactorDetail({ factorKey, nav }: { factorKey: FactorKey; nav: Na
   const isDriver = risk.data?.biggestDriver === factorKey
   const copy = COPY[factorKey]
   const badgeClass = factor ? statusBadgeClass(factor.status) : 'badge-neutral'
-  const color = badgeClass === 'badge-green' ? 'var(--green)' : badgeClass === 'badge-yellow' ? 'var(--yellow)' : badgeClass === 'badge-red' ? 'var(--red)' : 'var(--ink3)'
+  const color = badgeClass === 'badge-green' ? 'var(--green)' : badgeClass === 'badge-yellow' ? 'var(--yellow-text)' : badgeClass === 'badge-red' ? 'var(--red)' : 'var(--ink3)'
 
   return (
     <div className="screen-grid">
@@ -93,7 +93,7 @@ export function FactorDetail({ factorKey, nav }: { factorKey: FactorKey; nav: Na
         <span className="label">What would help</span>
         <p style={{ fontSize: 13, lineHeight: 1.6, margin: 0, color: 'var(--ink2)' }}>{copy.help}</p>
       </div>
-      <div className="card span-2" style={{ background: 'var(--page)', boxShadow: 'none' }}>
+      <div className="card span-2" style={{ background: 'var(--fill)', boxShadow: 'none' }}>
         <p style={{ fontSize: 12, lineHeight: 1.55, margin: 0, color: 'var(--ink2)' }}>{copy.caveat}</p>
       </div>
     </div>
