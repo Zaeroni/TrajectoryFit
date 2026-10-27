@@ -6,7 +6,7 @@ package com.trajectoryfit.risk.config;
  * and are sourced (loosely) from GLP-1 and sports-nutrition literature; they are
  * expected to be re-tuned as real numbers firm up, which is exactly why they live here.
  *
- * <p>Plain POJO with getters/setters so the Spring layer can bind
+ * Plain POJO with getters/setters so the Spring layer can bind
  * {@code trajectoryfit.risk.*} properties onto an instance via
  * {@code @ConfigurationProperties} without this framework-free core depending on Spring.
  */

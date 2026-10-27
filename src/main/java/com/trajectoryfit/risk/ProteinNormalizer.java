@@ -8,7 +8,7 @@ import com.trajectoryfit.risk.model.ProteinLog;
  * Collapses a day's protein entry — logged in any of the three tiers — into a single
  * {@link ProteinLevel}, so the scoring engine never has to care which tier produced it.
  *
- * <p>Priority order, using the first tier that has data for the day (a faithful port of
+ * Priority order, using the first tier that has data for the day (a faithful port of
  * the prototype's {@code getDayProteinLevel}):
  * <ol>
  *   <li><b>Precise</b>: sum the logged grams and compare to a daily target of
@@ -20,7 +20,7 @@ import com.trajectoryfit.risk.model.ProteinLog;
  *   <li><b>Quick</b>: use the single daily rating directly.</li>
  * </ol>
  *
- * <p>If nothing was logged that day, returns {@code null} — the day has no protein value
+ * If nothing was logged that day, returns {@code null} — the day has no protein value
  * and must be excluded from adherence entirely (it is <em>not</em> counted as low).
  */
 public final class ProteinNormalizer {

@@ -7,7 +7,7 @@ import java.util.List;
  * contributing factor's sub-score, the biggest driver (if any is worth naming), and a
  * one-line summary. This is the object the {@code /risk} endpoint serializes.
  *
- * <p>When nothing was logged in the window, {@link #hasData()} is {@code false},
+ * When nothing was logged in the window, {@link #hasData()} is {@code false},
  * {@link #score()} and {@link #band()} are {@code null}, and the factors carry
  * "No data" statuses.
  *

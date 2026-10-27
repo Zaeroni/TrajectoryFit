@@ -8,7 +8,7 @@ import com.trajectoryfit.risk.result.RiskBand;
  * with the risk band it is expected to land in, so the same definitions double as an
  * integration-test fixture and as the seed for synthetic database users.
  *
- * <p>{@code CARDIO_ONLY} and {@code BRAND_NEW} are the load-bearing cases: they prove the
+ * {@code CARDIO_ONLY} and {@code BRAND_NEW} are the load-bearing cases: they prove the
  * model distinguishes "active but not protecting muscle" from "actually at risk", and that
  * it never penalizes missing data as if it were bad data.
  */

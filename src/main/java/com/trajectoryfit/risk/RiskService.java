@@ -18,13 +18,13 @@ import java.util.List;
  * logs into a lean-mass-loss risk assessment: a 0–100 score, a band, and per-factor
  * sub-scores that explain <em>why</em>.
  *
- * <p>This is a transparent, literature-sourced rule system, not a machine-learned model
+ * This is a transparent, literature-sourced rule system, not a machine-learned model
  * — a deliberate choice (see design rationale: "Why rules before ML"). It is also fully
  * framework-free: it takes plain {@link DailyLog}s and {@link LeanMassReading}s and a
  * {@link RiskConfig}, so it can be unit-tested and validated against the synthetic
  * archetypes without any Spring or database machinery.
  *
- * <p>Signals, in order of importance: weight-loss rate (strongest), protein intake,
+ * Signals, in order of importance: weight-loss rate (strongest), protein intake,
  * resistance-training frequency (the biggest protective lever), and — only when present
  * — a body-composition trend that confirms or softens the score.
  */
